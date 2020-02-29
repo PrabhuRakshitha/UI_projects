@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Midterm</title>
+	<meta charset="UTF-8">
+	<style>
+div { width: 20rem; border: solid 2px #acacac; padding: 2rem; }
+input,select { margin-bottom: 20px; }
+input[type=submit] { color: #aaa; }
+#confirmMsg {font-size: 80%; padding-left: 1em; }
+	</style>
+<script>
+function clearForm() {
+ //document.test1.reset();
+ //#1 add explicit clears here as needed
+ // make sure you check in multiple browsers and don't forget the error message
+ document.getElementById('firstName').value='';
+ document.getElementById('email').value='';
+ document.getElementById('password').value='';
+ document.getElementById('confirm').value='';
+ document.getElementById('agree').checked=false;
+ document.getElementById('confirmMsg').innerHTML='';
+ document.getElementById('option').selectedIndex=0;
+ //when you clear a form you want to start from the beginning like the page load
+	startHere();
+ //#9 disable the submit since you probably cleared the "I agree" box.
+ //advanced: would you add anything else here for usability (not required)
+ 	iAgree();
+  }
+
+function startHere() {
+		//#10 a great place to give me some focus on that first input element
+	document.getElementById("firstName").focus();
+	document.getElementById("mySubmit").disabled = true;
+	document.getElementById("mySubmit").style.color='#aaa';
+	}
+
+//#2 add actions for the selectors here. What message and how to display it... your choice
+//#3 make sure to add the call to this function
+function checkSelect(el) {
+	var message;
+    switch(el) {
+    	case "blank":
+			message ="select from the drop down !!!";
+    	break;
+    	case "winter":
+			message = "you selected winter session !!!";
+    	break;
+    	case "spring":
+			message ="you selected spring session !!!";
+    	break;
+    	case "summer":
+			message ="you selected summer session !!!";
+    	break;
+    	case "fall":
+			message ="you selected fall session !!!";
+    	break;
+    	default:
+			message ="select  one from the drop down !!!";
+
+    	}
+			alert(message);
+  }
+
+ function checkMatch() {
+	 	var pwd = document.test1.password.value;
+		var y = document.test1.confirm.value;
+  	if ((pwd != null || pwd !='') && (pwd == y )){
+  		//#4 style your error message here
+				document.getElementById('confirmMsg').style.color='Green';
+				document.getElementById('confirmMsg').innerHTML="Passowd matching";
+  		} else {
+  		//#5 style your error message here
+			document.getElementById('confirmMsg').style.color='Red';
+			document.getElementById('confirmMsg').innerHTML="Passowd not matching";
+
+  		}
+  }
+  function iAgree() {
+
+	if (document.getElementById('agree').checked) {
+		document.getElementById("mySubmit").disabled = false;
+		document.getElementById("mySubmit").style.color="#000";
+	 }
+	 else {
+	 		document.getElementById("mySubmit").disabled = true;
+			document.getElementById("mySubmit").style.color="#aaa";
+	 }
+	}
+  function checkForm() {
+  //#6 fix this conditional to test firstName and email. Don't allow empty inputs
+		var name =document.getElementById('firstName').value;
+		var email=document.getElementById('email').value;
+  	if(  name == null || name == '' || email == null || email== '' ) {
+  		alert("Please fill in all the fields");
+  	} else {
+  		alert("Success");
+  	}
+  }
+	</script>
+</head>
+<body onload="startHere()">
+<!--#7 did I mention how much I like focus on the first input?
+I even built the function for you. Now call it -->
+<div>
+<h2>
+	Midterm Form
+</h2>
+<!--  ************************************* -->
+<p >Directions: First name and email need to have data to successfully submit. Must match the password and confirm fields dynamically. Must click agree to enable submit.<br> It is so nice to have focus on the first input field when a form loads.
+</p>
+<form name="test1" action=""  method="POST">
+
+		<label for="firstName">Your Name: </label><br>
+		<input type="text" name="firstName" id="firstName"><br>
+
+		<label for="email">Your Email: </label><br>
+		<input type="email" name="email" id="email"><br>
+
+		<label for="password">Password: </label><br>
+		<input type="password" name="password" id="password"><br>
+
+		<label for="confirm">Confirm: </label><br>
+		<input type="text" name="confirm" id="confirm" onkeyup="checkMatch()"><span id="confirmMsg"></span><br>
+
+		<select onchange="checkSelect(this.value)" id='option'>
+		  <option value="blank">Please select</option>
+		  <option value="winter">Winter</option>
+		  <option value="spring">Spring</option>
+		  <option value="summer">Summer</option>
+		  <option value="fall">Fall</option>
+		</select>
+		<br>
+		<input type="checkbox" id='agree' onclick="iAgree()"> I agree
+
+	<p onload="clearForm()">
+	<!--#8 make the reset button also clear the form like the page load -->
+		<input type="button" value="Clear Form" id="clear_form" onclick="clearForm()">
+		&nbsp; &nbsp;
+		<input type="submit" name="Submit" value="Send Form" id="mySubmit" onclick='checkForm()' >
+	</p>
+</form>
+
+</div>
+</body>
+</html>
